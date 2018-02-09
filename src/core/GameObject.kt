@@ -2,7 +2,7 @@ package core
 
 import components.*
 
-open class GameObject {
+open class GameObject : IEvents {
     val components = ArrayList<Component>()
     var transform: Transform = Transform(this)
 
@@ -12,7 +12,7 @@ open class GameObject {
         World.addQueue.add(this)
     }
 
-    fun getComponent(type: ComponentType): Component{
+    fun getComponent(type: ComponentType): Component {
         return components.first { it.getType() == type }
     }
     fun addComponent(type: ComponentType): Component {
@@ -25,6 +25,11 @@ open class GameObject {
             }
             ComponentType.SpriteRenderer -> {
                 val component = SpriteRenderer(this)
+                components.add(component)
+                component
+            }
+            ComponentType.Input -> {
+                val component = Input(this)
                 components.add(component)
                 component
             }

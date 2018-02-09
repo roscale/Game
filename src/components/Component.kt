@@ -4,11 +4,10 @@ import core.GameObject
 enum class ComponentType {
     Transform,
     Physics,
-    SpriteRenderer
+    SpriteRenderer,
+    Input
 }
 
-abstract class Component(gameObject: GameObject) {
-    val gameObject: GameObject = gameObject
-
+abstract class Component(val gameObject: GameObject) {
     abstract fun getType(): ComponentType
 }

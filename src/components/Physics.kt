@@ -10,7 +10,7 @@ class Physics(gameObject: GameObject): Component(gameObject) {
     val acceleration = PVector()
 
     init {
-        PhysicsManager.physicsComponents.add(this)
+        PhysicsManager.physicsComponent.add(this)
     }
 
     override fun getType(): ComponentType {
