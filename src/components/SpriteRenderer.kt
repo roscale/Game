@@ -13,7 +13,5 @@ class SpriteRenderer(gameObject: GameObject): Component(gameObject) {
         DrawingManager.spriteRenderers.add(this)
     }
 
-    override fun getType(): ComponentType {
-        return ComponentType.SpriteRenderer
-    }
+    override fun getType(): ComponentType = ComponentType.SpriteRenderer
 }

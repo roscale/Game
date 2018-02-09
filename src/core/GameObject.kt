@@ -12,29 +12,27 @@ open class GameObject : IEvents {
         World.addQueue.add(this)
     }
 
-    fun getComponent(type: ComponentType): Component {
-        return components.first { it.getType() == type }
-    }
-    fun addComponent(type: ComponentType): Component {
-        return when(type) {
-            ComponentType.Transform -> { transform }
-            ComponentType.Physics -> {
-                val component = Physics(this)
-                components.add(component)
-                component
-            }
-            ComponentType.SpriteRenderer -> {
-                val component = SpriteRenderer(this)
-                components.add(component)
-                component
-            }
-            ComponentType.Input -> {
-                val component = Input(this)
-                components.add(component)
-                component
-            }
+    fun getComponent(type: ComponentType): Component = components.first { it.getType() == type }
+    
+    fun addComponent(type: ComponentType): Component =
+        when(type) {
+	        ComponentType.Transform -> { transform }
+	        ComponentType.Physics -> {
+	            val component = Physics(this)
+	            components.add(component)
+	            component
+	        }
+	        ComponentType.SpriteRenderer -> {
+	            val component = SpriteRenderer(this)
+	            components.add(component)
+	            component
+	        }
+	        ComponentType.Input -> {
+	            val component = Input(this)
+	            components.add(component)
+	            component
+	        }
         }
-    }
 
     fun removeComponent(component: Component) = components.remove(component)
 }
