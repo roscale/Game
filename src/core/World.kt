@@ -1,26 +1,45 @@
 package core
 
-import com.sun.jmx.remote.internal.ArrayQueue
 import managers.DrawingManager
+import managers.InputManager
 import managers.PhysicsManager
 import p
 import java.util.*
 
 object World {
-    val gameObjects = ArrayList<GameObject>()
-    val addQueue = ArrayQueue<GameObject>(10)
+	val gameObjects = ArrayList<GameObject>()
+	val addQueue = ArrayDeque<GameObject>()
 
-    fun remove(gameObject: GameObject) {
-        gameObjects.remove(gameObject)
-    }
+	val queue = ArrayDeque<Runnable>()
 
-    fun tick() {
-        PhysicsManager.update()
+	fun remove(gameObject: GameObject) {
+		queue.add(Runnable {
+			gameObjects.remove(gameObject)
+		})
+	}
 
-        p.translate(-Camera.transform.position.x, -Camera.transform.position.y)
-        p.scale(Camera.zoom)
+	fun tick() {
+		while (queue.isNotEmpty()) {
+			val runnable = queue.pop()
+			runnable.run()
+		}
 
-        p.background(0f)
-        DrawingManager.draw()
-    }
+		while (addQueue.isNotEmpty()) {
+			val go = addQueue.pop()
+			gameObjects.add(go)
+		}
+
+
+		InputManager.update()
+		PhysicsManager.update()
+
+		for (gameObject: GameObject in gameObjects) {
+			gameObject.onUpdate()
+		}
+
+		p.translate(-Camera.transform.position.x, -Camera.transform.position.y)
+		p.scale(Camera.zoom)
+
+		DrawingManager.draw()
+	}
 }

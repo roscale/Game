@@ -6,14 +6,14 @@ import plusAssign
 import timesAssign
 
 object PhysicsManager {
-    val physicsComponent = ArrayList<Physics>()
+	val physicsComponents = ArrayList<Physics>()
 
-    fun update() {
-        for (physics in physicsComponent) {
-            physics.velocity += (physics.gravity + physics.acceleration)
-            physics.acceleration *= 0f
+	fun update() {
+		for (physics in physicsComponents) {
+			physics.velocity += (physics.gravity + physics.acceleration)
+			physics.acceleration *= 0f
 
-            physics.gameObject.transform.position += physics.velocity
-        }
-    }
+			physics.gameObject!!.transform.position += physics.velocity
+		}
+	}
 }
